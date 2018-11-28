@@ -1,5 +1,8 @@
 package ru.dserov.delta;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +11,8 @@ import java.util.List;
  * Various utility functions for electronic table management.
  */
 public final class DiffUtils {
+    private static final Logger log = LogManager.getLogger();
+
     private DiffUtils() {}
 
     /**
@@ -19,11 +24,15 @@ public final class DiffUtils {
      * @return a pair of lists stripped of duplicates between each other, or null, if any of the params is null.
      */
     public static ListPair<List<Byte>> delta(final List<List<Byte>> toInsert, final List<List<Byte>> toRemove) {
+        log.debug("Searching delta between {} and {}", toInsert, toRemove);
+
         if (toInsert == null || toRemove == null) {
+            log.debug("Either toInsert or toRemove is null, returning null");
             return null;
         }
 
         if (toInsert.isEmpty() || toRemove.isEmpty()) {
+            log.debug("Either toInsert or toRemove is empty, returning the original lists");
             return new ListPair<>(toInsert, toRemove);
         }
 
@@ -58,6 +67,8 @@ public final class DiffUtils {
             }
         });
 
+        log.debug("Found elements to insert: {}", toInsertResult);
+        log.debug("Found elements to remove: {}", toRemoveResult);
         return new ListPair<>(toInsertResult, toRemoveResult);
     }
 }

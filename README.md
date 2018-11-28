@@ -7,3 +7,7 @@ You may need to make the Gradle wrapper executable beforehand using `chmod +x gr
 
 # Example
 The example of the delta method execution can be found in DeltaApp.java. Run it with `./gradlew run`.
+
+# Logs
+
+Logs are written to target/rolling/runlog.log. The contents of the file are archived after each run in subsequent files within target/rolling2/ folder.
